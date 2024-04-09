@@ -6,11 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Entity
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-public class Category {
+@NoArgsConstructor
+public class IngredientsItem {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
@@ -19,8 +19,11 @@ public class Category {
     private String name;
 
     @ManyToOne
+    private IngredientCategory category;
+
     @JsonIgnore
+    @ManyToOne
     private Restaurant restaurant;
 
-
+    private boolean inStock=true;
 }

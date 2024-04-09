@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.Length;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -35,4 +37,13 @@ public class Food {
 
     @ManyToOne
     private Restaurant restaurant;
+
+    private boolean isVegetarian;
+
+    private boolean isSeasonal;
+
+    @ManyToMany
+    private List<IngredientsItem> ingredientsItems = new ArrayList<>();
+
+    private Date creationDate;
 }

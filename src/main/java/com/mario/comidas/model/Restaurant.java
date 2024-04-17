@@ -20,6 +20,8 @@ import java.util.List;
         @GeneratedValue (strategy = GenerationType.AUTO)
         private Long id;
 
+        private String name;
+
         @OneToOne
         private User owner;
 

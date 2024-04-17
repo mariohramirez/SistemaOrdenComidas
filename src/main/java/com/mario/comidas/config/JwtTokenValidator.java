@@ -40,13 +40,16 @@ public class JwtTokenValidator extends OncePerRequestFilter {
             try{
                 //Crea una instancia de secret key a partri de la clave definida en la constante
                 SecretKey key= Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
+                System.out.println(jwt);
                 //Hace parsing del token JWT y obtienen el claim
                 Claims claims= Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
 
                 //Obtiene el correo electronico
                 String email = String.valueOf(claims.get("email"));
+                System.out.println(email);
                 //Obtiene los roles
                 String authorities = String.valueOf(claims.get("authorities"));
+                System.out.println(authorities);
 
                 //ROLE_CUSTOMER, ROLE_ADMIN
 

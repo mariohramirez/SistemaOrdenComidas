@@ -16,4 +16,6 @@ public class RestaurantDto {
     private List<String> images;
 
     private String description;
+
+    private Long id;
 }

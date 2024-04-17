@@ -16,6 +16,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+import java.util.List;
 
 //Se marca la clase como controlador Rest
 @RestController
@@ -74,8 +76,11 @@ public class AuthController {
         cart.setCustomer(savedUser);
         cartRepository.save(cart);
 
+        List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(String.valueOf(user.getRole()));
+
+
         //Se crea una instacia de Authentication utilizando el correo y la contrasena
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(), authorities);
         //Se establece la autenticacion en el contexto de seguridad de Spring
         SecurityContextHolder.getContext().setAuthentication(authentication);
 

@@ -34,7 +34,7 @@ public class RestaurantServiceImpl implements RestaurantService{
         Restaurant restaurant = new Restaurant();
         restaurant.setAddress(address);
         restaurant.setContactInformation(req.getContactInformation());
-        restaurant.setCuisineType(req.getDescription());
+        restaurant.setCuisineType(req.getCuisineType());
         restaurant.setDescription(req.getDescription());
         restaurant.setImages(req.getImages());
         restaurant.setName(req.getName());
@@ -110,10 +110,20 @@ public class RestaurantServiceImpl implements RestaurantService{
         dto.setTitle(restaurant.getName());
         dto.setId(restaurantId);
 
-        if(user.getFavorites().contains(dto)){
-            user.getFavorites().remove(dto);
+        boolean isFavorited = false;
+        List<RestaurantDto> favorites = user.getFavorites();
+        for(RestaurantDto favorite: favorites){
+            if(favorite.getId().equals(restaurantId)){
+                isFavorited = true;
+                break;
+            }
         }
-        else user.getFavorites().add(dto);
+        if(isFavorited){
+            favorites.removeIf(favorite->favorite.getId().equals(restaurantId));
+        }
+        else {
+            favorites.add(dto);
+        }
 
         userRepository.save(user);
         return dto;
